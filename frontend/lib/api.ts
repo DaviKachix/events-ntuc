@@ -3,43 +3,104 @@ import type { Event } from "@/types/event";
 
 export const API = "http://157.180.17.101:5001/api/v1";
 
-async function request<T>(url: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(url, {
-    ...options,
-    cache: "no-store",
-  });
+type RequestOptions = RequestInit & {
+  timeout?: number;
+};
 
-  const text = await res.text();
+async function request<T>(
+  endpoint: string,
+  options: RequestOptions = {}
+): Promise<T | null> {
+  const controller = new AbortController();
 
-  if (!text) {
-    throw new Error("Empty response from API");
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, options.timeout || 15000);
+
+  try {
+    const res = await fetch(`${API}${endpoint}`, {
+      ...options,
+      cache: "no-store",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+      },
+    });
+
+    const text = await res.text();
+
+    if (!text) {
+      console.error("Empty response from API");
+      return null;
+    }
+
+    let json: ApiResponse<T>;
+
+    try {
+      json = JSON.parse(text);
+    } catch (parseError) {
+      console.error("Invalid JSON response:", parseError);
+      console.error(text);
+      return null;
+    }
+
+    if (!res.ok) {
+      console.error("HTTP Error:", res.status, json.message);
+      return null;
+    }
+
+    if (!json.success) {
+      console.error("API Error:", json.message);
+      return null;
+    }
+
+    return json.data;
+  } catch (error: any) {
+    if (error.name === "AbortError") {
+      console.error("Request timeout");
+    } else {
+      console.error("Request failed:", error);
+    }
+
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/* =========================
+   EVENTS
+========================= */
+
+export async function getEvents() {
+  return request<Event[]>("/events");
+}
+
+export async function getEvent(slug: string) {
+  if (!slug) {
+    console.error("Missing event slug");
+    return null;
   }
 
-  const json = JSON.parse(text) as ApiResponse<T>;
+  return request<Event>(`/events/${slug}`);
+}
 
-  if (!json.success) {
-    throw new Error(json.message || "API Error");
+/* =========================
+   REGISTRATIONS
+========================= */
+
+export async function registerEvent(
+  id: number,
+  data: Record<string, any>
+) {
+  if (!id) {
+    console.error("Missing event ID");
+    return null;
   }
 
-  return json.data;
-}
-
-// EVENTS
-export function getEvents() {
-  return request<Event[]>(`${API}/events`);
-}
-
-export function getEvent(slug: string) {
-  return request<Event>(`${API}/events/${slug}`);
-}
-
-// REGISTER
-export function registerEvent(id: number, data: any) {
-  return request<any>(`${API}/registrations/register/${id}`, {
+  return request<any>(`/registrations/register/${id}`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(data),
   });
 }

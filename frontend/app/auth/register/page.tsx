@@ -115,7 +115,7 @@ export default function RegisterPage() {
             </select>
 
             {/* BUTTON */}
-            <Button disabled={loading} className="w-full">
+            <Button className="w-full">
               {loading ? "Creating..." : "Register"}
             </Button>
 

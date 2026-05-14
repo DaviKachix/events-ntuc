@@ -124,7 +124,6 @@ export default function LoginPage() {
 
             {/* BUTTON */}
             <Button
-              disabled={loading}
               className="w-full flex items-center justify-center gap-2"
             >
               {loading ? (
