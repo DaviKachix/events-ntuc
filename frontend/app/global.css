@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --denim: #1f3a5f;
+  --denim-dark: #16263d;
+  --white: #ffffff;
+  --soft: #f5f7fb;
+  --muted: #6b7280;
+  --primary: #10b981;
+}
+
+/* =========================
+   BASE RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Noto Sans', sans-serif;
+  background: var(--soft);
+  color: var(--denim);
+  scroll-behavior: smooth;
+}
+
+/* =========================
+   GLOBAL LINKS
+========================= */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* =========================
+   LAYOUT FIXED BEHAVIOR
+========================= */
+.layout-fixed {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* sidebar fixed */
+.sidebar-fixed {
+  width: 260px;
+  background: var(--white);
+  border-right: 1px solid #e5e7eb;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* content shift */
+.content-fixed {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  min-height: 100vh;
+}
+
+/* =========================
+   CARD SYSTEM
+========================= */
+.card {
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(31, 58, 95, 0.08);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.btn-denim {
+  background: var(--denim);
+  color: white;
+}
+
+.btn-denim:hover {
+  background: var(--denim-dark);
+}
+
+/* =========================
+   INPUTS
+========================= */
+input, textarea, select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* =========================
+   ANIMATIONS (SWEET BUT CLEAN)
+========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* subtle pulse */
+@keyframes softPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.pulse {
+  animation: softPulse 2s infinite ease-in-out;
+}
+
+/* =========================
+   SCROLLBAR (CLEAN)
+========================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* =========================
+   TYPOGRAPHY HELPERS
+========================= */
+h1, h2, h3 {
+  color: var(--denim);
+  font-weight: 600;
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+/* =========================
+   RESPONSIVENESS
+========================= */
+@media (max-width: 768px) {
+  .sidebar-fixed {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .content-fixed {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .layout-fixed {
+    flex-direction: column;
+  }
+}
+
+/* =========================
+   MOBILE UX IMPROVEMENTS
+========================= */
+@media (max-width: 480px) {
+  .card {
+    padding: 12px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
