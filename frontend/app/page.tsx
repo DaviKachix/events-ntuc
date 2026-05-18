@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const API = "http://157.180.17.101:5001/api/v1";
+const API = "https://157.180.17.101:8443/api/v1";
 
 /* ---------------- IMAGE MAP ---------------- */
 const eventImageMap: Record<string, string> = {

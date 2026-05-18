@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/types/api";
 import type { Event } from "@/types/event";
 
-export const API = "http://157.180.17.101:5001/api/v1";
+export const API = "https://157.180.17.101:8443/api/v1";
 
 type RequestOptions = RequestInit & {
   timeout?: number;
