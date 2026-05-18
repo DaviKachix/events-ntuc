@@ -77,7 +77,7 @@ export default function HomePage() {
 
       {/* NAVBAR */}
       <header className="sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 pt-3">
+        <div className="max-w-7xl mx-auto px-2 pt-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white/90 backdrop-blur-xl border rounded-2xl px-4 py-3">
 
             <div className="flex items-center gap-3">
@@ -101,7 +101,7 @@ export default function HomePage() {
       </header>
 
       {/* HERO */}
-      <section className="relative h-[85vh] overflow-hidden -mt-16">
+      <section className="h-[90vh] overflow-hidden -mt-16">
 
         <div
           className="absolute inset-0 bg-cover bg-center scale-105 transition-all duration-700"
